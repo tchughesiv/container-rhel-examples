@@ -1,5 +1,5 @@
 CONTEXT = acme
-VERSION = v3.7
+VERSION = v3.9
 IMAGE_NAME = starter-arbitrary-uid
 REGISTRY = docker-registry.default.svc.cluster.local:5000
 OC_USER=developer

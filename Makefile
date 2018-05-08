@@ -4,7 +4,6 @@ starter-arbitrary-uid \
 starter-rhel-atomic \
 starter-epel \
 starter-systemd \
-starter-nsswrapper \
 starter-api \
 starter-scratch
 

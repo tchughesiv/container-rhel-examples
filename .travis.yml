@@ -1,16 +1,14 @@
 sudo: required
-dist: trusty
 
 env:
   global:
-    - OCP_VERSION=v3.6.1
+    - OCP_VERSION=v3.9
     - TARGET=centos7
   matrix:
     - VARIANT=starter
     - VARIANT=starter-arbitrary-uid
     - VARIANT=starter-epel
     - VARIANT=starter-systemd
-    - VARIANT=starter-nsswrapper
     - VARIANT=starter-api
     - VARIANT=starter-scratch
 
@@ -37,8 +35,7 @@ before_script:
 script:
   - if [ ${BUILD} ]; then make -C ${VARIANT} TARGET=${TARGET}; fi
   - if [ ${BUILD} ]; then make test -C ${VARIANT} TARGET=${TARGET}; fi
-  - if [ ${BUILD} ]; then wget `curl -s https://api.github.com/repos/openshift/origin/releases/latest | jq -r ".assets[] | select(.name | test(\"linux-64bit\")) | .browser_download_url" | grep -i client-tools`; fi
-  - if [ ${BUILD} ]; then tar xvfz `ls openshift-origin-client-tools-*.tar.gz` --strip-components=1 -C $HOME/bin; fi
+  - if [ ${BUILD} ]; then sudo docker cp $(docker create docker.io/openshift/origin:${OCP_VERSION}):/bin/oc /usr/local/bin/oc; fi
   - if [ ${BUILD} ]; then if [ ${OCP_VERSION} ]; then oc cluster up --version=${OCP_VERSION}; else oc cluster up; fi; fi
   - if [ ${BUILD} ]; then export OC_USER=`oc whoami` OC_PASS=`oc whoami -t`; fi
   - if [ ${BUILD} ]; then oc login -u system:admin; fi

@@ -6,10 +6,6 @@ objects:
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
-    annotations:
-      openshift.io/generated-by: OpenShiftWebConsole
-    creationTimestamp: null
-    generation: 7
     labels:
       app: starter-arbitrary-uid
     name: starter-arbitrary-uid
@@ -19,7 +15,6 @@ objects:
       app: starter-arbitrary-uid
       deploymentconfig: starter-arbitrary-uid
     strategy:
-      resources: {}
       rollingParams:
         intervalSeconds: 1
         maxSurge: 25%
@@ -29,9 +24,6 @@ objects:
       type: Rolling
     template:
       metadata:
-        annotations:
-          openshift.io/generated-by: OpenShiftWebConsole
-        creationTimestamp: null
         labels:
           app: starter-arbitrary-uid
           deploymentconfig: starter-arbitrary-uid
@@ -40,12 +32,9 @@ objects:
         - image: starter-arbitrary-uid
           imagePullPolicy: Always
           name: starter-arbitrary-uid
-          resources: {}
           terminationMessagePath: /dev/termination-log
         dnsPolicy: ClusterFirst
         restartPolicy: Always
-        securityContext: {}
-        terminationGracePeriodSeconds: 30
     test: false
     triggers:
     - type: ConfigChange
@@ -82,7 +71,4 @@ objects:
         kind: "ImageStreamTag"
         name: "starter-arbitrary-uid:latest"
     triggers:
-    - generic:
-        secret: b725254e6534fd70
-      type: Generic
     - type: ConfigChange
